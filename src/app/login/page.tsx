@@ -1,8 +1,6 @@
-import react from 'react'
 const LoginPage = () => {
-    return (
-        <>
-      
+  return (
+    <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -18,7 +16,10 @@ const LoginPage = () => {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form action="#" method="POST" className="space-y-6">
             <div>
-              <label htmlFor="member_id" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="member_id"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Member ID
               </label>
               <div className="mt-2">
@@ -35,10 +36,12 @@ const LoginPage = () => {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
-                
               </div>
               <div className="mt-2">
                 <input
@@ -61,12 +64,10 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
-
-          
         </div>
       </div>
     </>
-    )
+  )
 }
 
 export default LoginPage
