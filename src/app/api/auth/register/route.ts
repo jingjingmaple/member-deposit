@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     const hashedPassword = await hash(password, 10)
 
-    const response = await createMember({ username, password: hashedPassword, erp_member_key })
+    await createMember({ username, password: hashedPassword, erp_member_key })
   } catch (e) {
     console.log({ e })
   }

@@ -17,8 +17,6 @@ const LoginPage = () => {
     },
   })
   const onSubmit = async (data: LoginForm) => {
-    console.log('Submitting form', data)
-
     const { username, password } = data
 
     try {
@@ -27,9 +25,7 @@ const LoginPage = () => {
         password,
         redirect: false,
       })
-      console.log({ response })
       if (!response?.error) {
-        console.log('login success')
         router.push('/member/')
         router.refresh()
       }
@@ -37,9 +33,8 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      // Process response here
-      console.log('Login Successful', response)
     } catch (error: any) {
+      alert('Invalid username or password')
       console.error('Login Failed:', error)
     }
   }

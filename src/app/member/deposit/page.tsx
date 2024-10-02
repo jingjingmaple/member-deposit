@@ -2,25 +2,44 @@
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import SuccessPage from './success/page'
 const amountChoice = [
   {
     id: 1,
     name: '100 THB',
+    value: 100,
   },
   {
     id: 2,
     name: '500 THB',
+    value: 500,
   },
   {
     id: 3,
     name: '1000 THB',
+    value: 1000,
   },
 ]
 export default function DepositPage() {
   const [selected, setSelected] = useState(amountChoice[0])
-
-  return (
+  const [showSuccessPage, setShowSuccessPage] = useState<boolean>(false)
+  const [receivedAmount, setReceivedAmount] = useState<string>('-')
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    fetch('/api/deposit', {
+      method: 'POST',
+      body: JSON.stringify({ amount: selected.value }),
+    }).then((result: any) => {
+      console.log('result', result)
+      const { amount } = result
+      setReceivedAmount(amount)
+      setShowSuccessPage(true)
+    })
+  }
+  return showSuccessPage ? (
+    <SuccessPage amount={selected.name} />
+  ) : (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div
         aria-hidden="true"
@@ -32,7 +51,7 @@ export default function DepositPage() {
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">Please select your desired amount</p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form onSubmit={onSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label

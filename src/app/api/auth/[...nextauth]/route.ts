@@ -24,15 +24,17 @@ const handler = NextAuth({
         const user = await findMemberByUsername(credentials!.username)
         if (!user) throw `Invalid username or password`
         const passwordCorrect = await compare(credentials?.password || '', user.password!)
-
+        console.log('user', user)
         if (passwordCorrect) {
           return {
-            id: user.id.toString(),
-            username: user.username,
+            id: `${user.id}`,
+            name: `${user.id}`,
+            email: user.username,
+            image:
+              'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
           }
         }
 
-        console.log('credentials', credentials)
         return null
       },
     }),

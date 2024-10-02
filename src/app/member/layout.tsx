@@ -20,7 +20,7 @@ const user = {
 const navigation = [
   { name: 'Home', href: '/member', current: true },
   { name: 'Make Deposit', href: '/member/deposit', current: false },
-  { name: 'History', href: '/member/transaction', current: false },
+  { name: 'History', href: '/member/history', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

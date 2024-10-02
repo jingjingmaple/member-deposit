@@ -4,8 +4,8 @@ import { Member, memberModel } from '@/db/model/member.schema'
 import { eq, InferInsertModel, InferSelectModel } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
-export const getMember = async () => {
-  const data = await db.select().from(memberModel)
+export const getMember = async (id: number) => {
+  const data = await db.select().from(memberModel).where(eq(memberModel.id, id))
   return data
 }
 
