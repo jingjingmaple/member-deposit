@@ -1,4 +1,47 @@
+'use client'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+
+interface LoginForm {
+  username: string
+  password: string
+}
 const LoginPage = () => {
+  const router = useRouter()
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  })
+  const onSubmit = async (data: LoginForm) => {
+    console.log('Submitting form', data)
+
+    const { username, password } = data
+
+    try {
+      const response: any = await signIn('credentials', {
+        username,
+        password,
+        redirect: false,
+      })
+      console.log({ response })
+      if (!response?.error) {
+        router.push('/')
+        router.refresh()
+      }
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      // Process response here
+      console.log('Login Successful', response)
+    } catch (error: any) {
+      console.error('Login Failed:', error)
+    }
+  }
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -14,21 +57,22 @@ const LoginPage = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <label
-                htmlFor="member_id"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Member ID
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="member_id"
-                  name="member_id"
+                  {...register('username')}
+                  id="username"
+                  name="username"
                   type="text"
                   required
-                  autoComplete="member_id"
+                  autoComplete="username"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -45,6 +89,7 @@ const LoginPage = () => {
               </div>
               <div className="mt-2">
                 <input
+                  {...register('password')}
                   id="password"
                   name="password"
                   type="password"
