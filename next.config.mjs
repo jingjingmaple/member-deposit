@@ -7,6 +7,11 @@ const nextConfig = {
         destination: '/member/deposit', // Matched parameters can be used in the destination
         permanent: false,
       },
+      {
+        source: '/',
+        destination: '/login', // Matched parameters can be used in the destination
+        permanent: false,
+      },
     ]
   },
 }
